@@ -1,0 +1,12 @@
+version: "3.5"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    working_dir: /app
+    volumes:
+      - ./src/:/src
+    ports:
+      - 8000:5000
+    command: ["./entry_point.sh"]
