@@ -8,7 +8,12 @@ import logging
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 def get_new_name() -> str:
-    return str(uuid.uuid1())
+    
+    website_name = str(uuid.uuid1())
+    logging.info(f"New website name: {website_name}")
+
+    return website_name
+
 
 def get_all_websites(upload_folder):
     sites = []

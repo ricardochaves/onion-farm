@@ -2,7 +2,6 @@ FROM python:3.12.0a4-alpine3.17
 
 WORKDIR /app
 
-# RUN apk update
 RUN apk add tor
 RUN apk add nginx
 RUN pip install Flask
