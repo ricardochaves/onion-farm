@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN apk add tor
 RUN apk add nginx
-RUN pip install Flask
+RUN pip install Flask Flask-HTTPAuth
 
 RUN mkdir /etc/torrc.d
 RUN mkdir /var/www/html/

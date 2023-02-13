@@ -1,5 +1,8 @@
 from flask import Flask
 from flask import render_template
+from flask_httpauth import HTTPBasicAuth
+from werkzeug.security import generate_password_hash, check_password_hash
+
 import time
 
 import os
@@ -16,8 +19,20 @@ from settings import UPLOAD_FOLDER
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
+
+users = {
+    os.getenv("ONION_FARM_USER", 'admin'): generate_password_hash(os.getenv("ONION_FARM_PASSWORD", "admin"))
+}
+
+@auth.verify_password
+def verify_password(username, password):
+    if username in users and \
+            check_password_hash(users.get(username), password):
+        return username
 
 @app.route("/", methods=['GET', 'POST'])
+@auth.login_required
 def hello():
     if request.method == 'POST':
 
@@ -35,6 +50,7 @@ def hello():
     return render_template('index.html', sites=sites)
 
 @app.route('/delete', methods=['POST'])
+@auth.login_required
 def delete():
     website_name = request.form.get('website_id')
     
@@ -50,6 +66,7 @@ def delete():
     return render_template('index.html', sites=sites)
 
 @app.route('/update', methods=['POST'])
+@auth.login_required
 def update():
     website_name = request.form.get('website_id')
 

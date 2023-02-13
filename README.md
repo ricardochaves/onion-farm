@@ -7,7 +7,7 @@ I made this project to make it easy for anyone to host a website on the Onion ne
 # How to use
 
 ```bash
-docker run -p 3000:5000 ricardobchaves6/onion-farm:v0.0.1-beta
+docker run -p 3000:5000 ricardobchaves6/onion-farm:v1.0.0
 ```
 
 Now just access your localhost on the chosen port, in my example it's `3000`. `0.0.0.0:3000`
@@ -22,6 +22,8 @@ Your website needs to be in a zip file, and the root of your project needs to ha
 
 # Advanced Options
 
+## Preserve Data
+
 If you destroy your container, you will lose your website URL. To prevent this, you can use docker volumes.
 
 ```bash
@@ -33,3 +35,9 @@ docker run \
     -v $(pwd)/tor/:/var/lib/tor/ \
     ricardobchaves6/onion-farm:v0.0.14-beta
 ```
+
+## Auth
+
+The default user is `admin` and the default password is `admin`.
+
+You can change this using `ONION_FARM_USER` and `ONION_FARM_PASSWORD` variables.
